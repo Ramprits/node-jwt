@@ -7,11 +7,15 @@ var User = require("../models/user");
 let refreshTokens = [];
 
 router.post("/register", async (req, res) => {
-  const hash = bcrypt.hashSync(req.body.password, 10);
-  const user = new User({ ...req.body, password: hash });
-  await user.save();
-  user.password = undefined;
-  res.status(201).json(user);
+  try {
+    const hash = bcrypt.hashSync(req.body.password, 10);
+    const user = new User({ ...req.body, password: hash });
+    await user.save();
+    user.password = undefined;
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 });
 
 router.post("/login", async (req, res) => {
