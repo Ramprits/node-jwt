@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 module.exports = () => {
   mongoose.connect(
-    "mongodb://localhost:27017/jwtAppDB",
+    process.env.MONGO_URI || "mongodb://localhost:27017/jwtAppDB",
     {
       useNewUrlParser: true,
       useCreateIndex: true,
